@@ -1,0 +1,18 @@
+{
+  "name": "firebaseapp",
+  "version": "10.17.0",
+  "description": "This App is use Firebase for database with Node ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Suraj Chand",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
+  }
+}
