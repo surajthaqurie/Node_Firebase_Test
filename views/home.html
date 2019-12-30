@@ -4,38 +4,50 @@
 <head>
     <title>My First Express App</title>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCE5tkSauUkqGdmQcTlm84QY5aR7IAwuF4",
-    authDomain: "node-firebase-test-9da89.firebaseapp.com",
-    databaseURL: "https://node-firebase-test-9da89.firebaseio.com",
-    projectId: "node-firebase-test-9da89",
-    storageBucket: "node-firebase-test-9da89.appspot.com",
-    messagingSenderId: "1006086497474",
-    appId: "1:1006086497474:web:16ac7ccdd6d1cc9b66475b",
-    measurementId: "G-D53BY1NDNX"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCE5tkSauUkqGdmQcTlm84QY5aR7IAwuF4",
+            authDomain: "node-firebase-test-9da89.firebaseapp.com",
+            databaseURL: "https://node-firebase-test-9da89.firebaseio.com",
+            projectId: "node-firebase-test-9da89",
+            storageBucket: "node-firebase-test-9da89.appspot.com",
+            messagingSenderId: "1006086497474",
+            appId: "1:1006086497474:web:16ac7ccdd6d1cc9b66475b",
+            measurementId: "G-D53BY1NDNX"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
 
 </head>
 
 <body>
-    <h3>This is An Example FireBase Project.</h3>
-    <p>Live Yours Life.</p>
-    <form method="POST">
-        <p>Enter Your BreakFast : <input name="breakfast" autocomplete="off" /> </p>
-        <button type="submit">Submit</button>
-    </form>
+    <h2>Voting App</h2>
+    <p>Login With Firebase</p>
+    <button onclick={signInWithGoogle()}>
+        SignIn with Google
+    </button>
+    <script>
+        function signInWithGoogle() {
+            let googleAuthProvider = new firebase.auth.GoogleAuthProvider
+
+            firebase.auth().signInWithPopup(googleAuthProvider)
+                .then(function (data) {
+                    console.log(data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    </script>
 </body>
 
 </html>
