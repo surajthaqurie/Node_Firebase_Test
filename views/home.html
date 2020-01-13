@@ -10,7 +10,7 @@
     <!-- firebaseUI -->
     <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
 
-    
+
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -30,6 +30,9 @@
 <body>
     <h2>Voting App</h2>
     <p>Login With Firebase</p>
+    <h3 id="google-displayName"></h3>
+    <img id="google-pic" src="" />
+    <p id="google-email"></p>
     <button onclick='signInWithGoogle()'>
         SignIn with Google
     </button>
@@ -40,6 +43,9 @@
             firebase.auth().signInWithPopup(provider)
                 .then((result) => {
                     console.log(result);
+                    document.getElementById('google-displayName').innerHTML = result.user.displayName;
+                    document.getElementById('google-pic').src = result.user.photoURL;
+                    document.getElementById('google-email').innerHTML = result.user.email;
                 }).catch((error) => {
                     console.log(error);
                 });
