@@ -1,51 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
     <title>My First Express App</title>
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+    <!-- firebaseUI -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
-
+    
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyCE5tkSauUkqGdmQcTlm84QY5aR7IAwuF4",
-            authDomain: "node-firebase-test-9da89.firebaseapp.com",
-            databaseURL: "https://node-firebase-test-9da89.firebaseio.com",
-            projectId: "node-firebase-test-9da89",
-            storageBucket: "node-firebase-test-9da89.appspot.com",
-            messagingSenderId: "1006086497474",
-            appId: "1:1006086497474:web:16ac7ccdd6d1cc9b66475b",
-            measurementId: "G-D53BY1NDNX"
+            apiKey: 'AIzaSyCoQaqrOYyXjmv9IJxeNqXt4K1NQuPz-8w',
+            authDomain: 'node-firebase-fd9fd.firebaseapp.com',
+            databaseURL: 'https://node-firebase-fd9fd.firebaseio.com',
+            projectId: 'node-firebase-fd9fd',
+            storageBucket: 'node-firebase-fd9fd.appspot.com',
+            messagingSenderId: '775051055235',
+            appId: '1:775051055235:web:6331bf08a7a898a9d80bb6'
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
     </script>
-
 </head>
 
 <body>
     <h2>Voting App</h2>
     <p>Login With Firebase</p>
-    <button onclick={signInWithGoogle()}>
+    <button onclick='signInWithGoogle()'>
         SignIn with Google
     </button>
     <script>
         function signInWithGoogle() {
-            let googleAuthProvider = new firebase.auth.GoogleAuthProvider
-
-            firebase.auth().signInWithPopup(googleAuthProvider)
-                .then(function (data) {
-                    console.log(data);
-                })
-                .catch(function (error) {
+            // Using a popup.
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    console.log(result);
+                }).catch((error) => {
                     console.log(error);
-                })
+                });
         }
     </script>
 </body>
