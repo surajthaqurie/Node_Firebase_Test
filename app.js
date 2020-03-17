@@ -2,6 +2,15 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+const admin = require('firebase-admin');
+
+const servericeAccount = require('./serviceKey.json');
+
+const firebaseAdmin = admin.initializeApp({
+    credential: admin.credential.cert(servericeAccount),
+    databaseURL: 'https://node-firebase-fd9fd.firebaseio.com'
+});
+
 // Create instance of Express app
 const app = express();
 
@@ -21,10 +30,23 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(logger('dev'));
 
+// Create authentication middleware
+function isAuthenticated(req, res, next) {
+    // check is user is logged in
+    // if they are, attach the user to the request object and call next
+    // if they are not, send them to the login page
+    // with a message saying : "login!"
+
+}
+
 // API (Routes)
 app.get('/', (req, res) => {
     // res.send('<h1> This is an example of FireBase</h1>');
     res.render('home');
+});
+
+app.get('/homecoming-queen', isAuthenticated, (req, res) => {
+    res.render('homecomingQueen.html');
 });
 
 app.post('/', (req, res) => {

@@ -10,6 +10,9 @@
     <!-- firebaseUI -->
     <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
 
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <script>
         // Your web app's Firebase configuration
@@ -29,14 +32,72 @@
 
 <body>
     <h2>Voting App</h2>
-    <p>Login With Firebase</p>
-    <h3 id="google-displayName"></h3>
-    <img id="google-pic" src="" />
-    <p id="google-email"></p>
-    <button onclick='signInWithGoogle()'>
+    <button class="btn btn-success float-right mr-2" id="google-signin" onclick='signInWithGoogle()'>
         SignIn with Google
     </button>
+    <button class="btn btn-danger float-right mr-2" id="signout" onclick='signOut()'
+        style="display: none;visibility: hidden;">
+        Sign Out
+    </button>
+    <p>Login With Firebase</p>
+    <h3 id="google-displayName"></h3>
+    <p id="google-email"></p>
+    <img id="google-pic" src="" />
+
+
+    <!-- <script src="./js/firebaseAuth.js"> -->
     <script>
+        function checkIfLoggedIn() {
+            firebase.auth().onAuthStateChanged(user => {
+                // if (localStorage.getItem('firebase_idToken')) {
+                if (user) {
+                    // do logged in stuff
+                    console.log('user sign in');
+                    // console.log(user);
+
+                    let photoURL = user.photoURL;
+
+                    document.getElementById('google-pic')
+                        .setAttribute('src', photoURL);
+
+                    // document.getElementById('google-pic')
+                    //     .setAttribute('src', localStorage.getItem('google-photo'));
+
+                    document.getElementById('google-signin')
+                        .setAttribute('style', 'display:none; visibility: hidden');
+
+                    document.getElementById('signout')
+                        .setAttribute('style', 'display: inline-block; visibility: visible');
+                } else {
+                    // do not logged in stuff
+                    console.log('user log out');
+                    document.getElementById('google-signin')
+                        .setAttribute('style', 'display:inline-block; visibility: visible');
+
+
+                    document.getElementById('signout')
+                        .setAttribute('style', 'display: none; visibility: hidden');
+                }
+            });
+            // let user = firebase.auth().currentUser;
+            // console.log(user); // Null is output
+        }
+
+        window.onload = () => {
+            checkIfLoggedIn();
+        }
+
+        function signOut() {
+
+            firebase.auth().signOut();
+
+            // localStorage.removeItem('firebase_idToken');
+            // localStorage.removeItem('google-photo');
+
+            document.getElementById('google-pic')
+                .setAttribute('src', '');
+        }
+
         function signInWithGoogle() {
             // Using a popup.
             var provider = new firebase.auth.GoogleAuthProvider();
@@ -45,7 +106,19 @@
                     console.log(result);
                     document.getElementById('google-displayName').innerHTML = result.user.displayName;
                     document.getElementById('google-pic').src = result.user.photoURL;
+
+                    // Set IdToken in localStroage of Browser
+                    const idToken = result.credential.idToken;
+
+                    // localStorage.setItem('firebase_idToken', idToken);
+
+                    const photo = result.user.photoURL;
+                    // localStorage.setItem('google-photo', photo);
+
                     document.getElementById('google-email').innerHTML = result.user.email;
+
+                    checkIfLoggedIn();
+
                 }).catch((error) => {
                     console.log(error);
                 });
