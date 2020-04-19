@@ -68,16 +68,19 @@
         <div class="row">
             <%  let keys = Object.keys(restaurant) %>
             <% keys.forEach((key)=>{ %>
+            <% let allUser = Object.keys(restaurant[key].votes) %>
             <div class="col s6 m6 l6">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
                         <span class="card-title"><%= restaurant[key].name %></span>
-                        <p>Votes: <%= restaurant[key].votes %></p>
+                        <p>Votes: <%= allUser.length %></p>
                     </div>
                     <div class="card-action">
-                        <button class="btn" href="#">Upvote <i class="material-icons">arrow_upward
+                        <button onclick='upvote("<%= key %>")' class="btn" href="#">Upvote <i
+                                class="material-icons">arrow_upward
                             </i></button>
-                        <button class="btn" href="#">Downvote <i class="material-icons">arrow_downward</i></button>
+                        <button onclick='downvote("<%= key %>")' class="btn" href="#">Downvote <i
+                                class="material-icons">arrow_downward</i></button>
                     </div>
                 </div>
             </div>
@@ -113,7 +116,6 @@
                     console.log('user log out');
                     document.getElementById('google-signin')
                         .setAttribute('style', 'display:inline-block; visibility: visible');
-
 
                     document.getElementById('signout')
                         .setAttribute('style', 'display: none; visibility: hidden');
@@ -190,6 +192,51 @@
                     console.log(err);
                 });
 
+        }
+
+        function upvote(key) {
+            // console.log(key);
+            let user = firebase.auth().currentUser;
+            let userId = user.uid;
+            let displayName = user.displayName;
+
+            let database = firebase.database();
+
+            // let restaurantVotesRef = database.ref('/restaurants/' + key + '/votes' + userId);
+            let restaurantVotesRef = database.ref('/restaurants')
+                .child(key)
+                .child('/votes')
+                .child(userId);
+
+            restaurantVotesRef.push(displayName)
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+
+        function downvote(key) {
+            // console.log(key);
+            let user = firebase.auth().currentUser;
+            let userId = user.uid;
+            let displayName = user.displayName;
+
+            let database = firebase.database();
+
+            // let restaurantVotesRef = database.ref('/restaurants/' + key + '/votes' + userId);
+            let restaurantVotesRef = database.ref('/restaurants')
+                .child(key)
+                .child('/votes');
+
+            restaurantVotesRef.remove(userId)
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     </script>
 </body>
