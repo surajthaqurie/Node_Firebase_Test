@@ -16,6 +16,16 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <!-- Material Design  -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -43,22 +53,36 @@
             Sign Out
         </button>
         <p>Login With Firebase</p>
-        <p>Add Restaurant: <input id="addRestaurant" />
+        <img id="google-pic" src="" />
+        <h3 id="google-displayName"></h3>
+        <legend id="google-email"></legend>
+        <br />
+        <br />
+        <p>
+            <h5>Add Restaurant: </h5><input id="addRestaurant" />
             <button class="btn btn-primary" onclick='addRestaurant()'>
                 Add
             </button>
         </p>
 
-        <div>
+        <div class="row">
             <%  let keys = Object.keys(restaurant) %>
             <% keys.forEach((key)=>{ %>
-            <p><%= restaurant[key] %></p>
+            <div class="col s6 m6 l6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title"><%= restaurant[key].name %></span>
+                        <p>Votes: <%= restaurant[key].votes %></p>
+                    </div>
+                    <div class="card-action">
+                        <button class="btn" href="#">Upvote <i class="material-icons">arrow_upward
+                            </i></button>
+                        <button class="btn" href="#">Downvote <i class="material-icons">arrow_downward</i></button>
+                    </div>
+                </div>
+            </div>
             <%  }) %>
         </div>
-
-        <h3 id="google-displayName"></h3>
-        <p id="google-email"></p>
-        <img id="google-pic" src="" />
     </div>
 
     <!-- <script src="./js//firebaseAuth.js"></script> -->
@@ -153,7 +177,18 @@
             restaurantInput.value = '';
 
             // return restaurantRef.push().key;
-            restaurantRef.push(restaurantName);
+            restaurantRef.push({
+                name: restaurantName,
+                votes: 0,
+                // upvoters: {},
+                // downvoters: {}
+            })
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
 
         }
     </script>

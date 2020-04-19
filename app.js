@@ -47,10 +47,14 @@ app.get('/', (req, res) => {
     // res.send('<h1> This is an example of FireBase</h1>');
 
     let restaurantsRef = database.ref("/restaurants");
-    restaurantsRef.on('value', (snapshot) => {
+    restaurantsRef.once('value', (snapshot) => {
+        let data = snapshot.val();
         // console.log(snapshot.val());
+        if (!data) {
+            data = {};
+        }
         res.render('home', {
-            restaurant: snapshot.val()
+            restaurant: data
         });
     });
 });
