@@ -33,18 +33,26 @@
 </head>
 
 <body>
-    <h2>Voting App</h2>
-    <button class="btn btn-success float-right mr-2" id="google-signin" onclick='signInWithGoogle()'>
-        SignIn with Google
-    </button>
-    <button class="btn btn-danger float-right mr-2" id="signout" onclick='signOut()'
-        style="display: none;visibility: hidden;">
-        Sign Out
-    </button>
-    <p>Login With Firebase</p>
-    <h3 id="google-displayName"></h3>
-    <p id="google-email"></p>
-    <img id="google-pic" src="" />
+    <div class="container">
+        <h2>Voting App</h2>
+        <button class="btn btn-success float-right mr-2" id="google-signin" onclick='signInWithGoogle()'>
+            SignIn with Google
+        </button>
+        <button class="btn btn-danger float-right mr-2" id="signout" onclick='signOut()'
+            style="display: none;visibility: hidden;">
+            Sign Out
+        </button>
+        <p>Login With Firebase</p>
+        <p>Add Restaurant: <input id="addRestaurant" />
+            <button class="btn btn-primary" onclick='addRestaurant()'>
+                Add
+            </button>
+        </p>
+
+        <h3 id="google-displayName"></h3>
+        <p id="google-email"></p>
+        <img id="google-pic" src="" />
+    </div>
 
     <!-- <script src="./js//firebaseAuth.js"></script> -->
     <script>
@@ -128,12 +136,15 @@
 
     <!-- <script src="./js/firebaseVoting.js"></script> -->
     <script>
-        function addRestaurant(restaurantName) {
+        function addRestaurant() {
             let database = firebase.database();
-            let restaurantRef = database.ref('/');
+            let restaurantRef = database.ref('/restaurants');
+
+            let restaurantName = document.getElementById('addRestaurant')
+                .value;
 
             // return restaurantRef.push().key;
-            return restaurantRef.push('Burger King');
+            return restaurantRef.push(restaurantName);
 
         }
     </script>
