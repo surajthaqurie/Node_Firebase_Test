@@ -49,6 +49,13 @@
             </button>
         </p>
 
+        <div>
+            <%  let keys = Object.keys(restaurant) %>
+            <% keys.forEach((key)=>{ %>
+            <p><%= restaurant[key] %></p>
+            <%  }) %>
+        </div>
+
         <h3 id="google-displayName"></h3>
         <p id="google-email"></p>
         <img id="google-pic" src="" />
@@ -140,11 +147,13 @@
             let database = firebase.database();
             let restaurantRef = database.ref('/restaurants');
 
-            let restaurantName = document.getElementById('addRestaurant')
-                .value;
+            let restaurantInput = document.getElementById('addRestaurant');
+
+            let restaurantName = restaurantInput.value;
+            restaurantInput.value = '';
 
             // return restaurantRef.push().key;
-            return restaurantRef.push(restaurantName);
+            restaurantRef.push(restaurantName);
 
         }
     </script>

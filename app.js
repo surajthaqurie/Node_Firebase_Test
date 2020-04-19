@@ -11,6 +11,9 @@ const firebaseAdmin = admin.initializeApp({
     databaseURL: 'https://node-firebase-fd9fd.firebaseio.com'
 });
 
+
+let database = firebaseAdmin.database();
+
 // Create instance of Express app
 const app = express();
 
@@ -42,7 +45,14 @@ function isAuthenticated(req, res, next) {
 // API (Routes)
 app.get('/', (req, res) => {
     // res.send('<h1> This is an example of FireBase</h1>');
-    res.render('home');
+
+    let restaurantsRef = database.ref("/restaurants");
+    restaurantsRef.on('value', (snapshot) => {
+        // console.log(snapshot.val());
+        res.render('home', {
+            restaurant: snapshot.val()
+        });
+    });
 });
 
 app.get('/homecoming-queen', isAuthenticated, (req, res) => {
