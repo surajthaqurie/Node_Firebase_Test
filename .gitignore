@@ -3,6 +3,8 @@
 
 # misc files
 package-lock.json*
+
 serviceKey.json*
+serviceKey.json
 
 *.json !package.json
